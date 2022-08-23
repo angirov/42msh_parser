@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 06:58:08 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/13 19:51:54 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/23 12:24:45 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	ft_format_redirs(t_group *group, int cmd_i)
 		type = ft_ectracttype(link);
 		if (ft_is_redir(type) > 0)
 		{
+			printf("TEST 0 <\n");
 			next = link->next;
 			if (!next)
 			{
@@ -64,12 +65,15 @@ void	ft_format_redirs(t_group *group, int cmd_i)
 			{
 				printf("deleteing SEP\n");
 				link->next = next->next;
-				printf("TEST <\n");
-				ft_free_lexem(next);
+				printf("TEST 1 <\n");
+				// ft_free_lexem(next);
 			}
+			printf("TEST 2 <\n");
 		}
 		link = link->next;
+		printf("TEST 3 <\n");
 	}
+	printf("TEST 999 <\n");
 }
 
 void	ft_extract_redirs(t_group *group, int cmd_i)
@@ -77,6 +81,7 @@ void	ft_extract_redirs(t_group *group, int cmd_i)
 	t_list	*link;
 	t_list	*temp;
 
+	printf("TEST ex1 <\n");
 	link = *group->cmds->cmd_args[cmd_i];
 	while (link)
 	{
@@ -91,4 +96,5 @@ void	ft_extract_redirs(t_group *group, int cmd_i)
 		link = link->next;
 	}
 	ft_dellastsep(group->cmds->cmd_args[cmd_i]);
+	printf("TEST ex000 <\n");
 }

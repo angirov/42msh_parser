@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:13:32 by danisanc          #+#    #+#             */
-/*   Updated: 2022/07/13 19:25:50 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/23 13:01:47 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_printlexems(t_list **lexems)
 			printf("<%3d>\n", (*(t_lexem *)link->content).type);
 		link = link->next;
 	}
-	printf("============\n");
+	printf("============================ lexems printed =\n");
 }
 
 void	ft_print_arg_redir(t_group *group)
@@ -53,7 +53,7 @@ void	ft_print_newargvs(t_group *group)
 	int	k;
 
 	j = 0;
-	while (j < group->cmds->cmd_num)
+	while (j < group->cmds->cmd_num && *group->cmds->cmd_args[j])
 	{
 		k = 0;
 		while (k < ft_count_args(group->cmds->cmd_args[j]))
@@ -74,12 +74,12 @@ void	ft_print_groups(t_msh *msh)
 	printf("\n\n\nNUMBER OF GROUPS: %d\n", msh->group_num);
 	while (i < msh->group_num)
 	{
-		printf("============================================\n");
+		printf("=============================================\n");
 		printf("Group #%d (type %d, cmd_num %d):\n", i, \
 			msh->groups[i]->type, msh->groups[i]->cmds->cmd_num);
 		ft_print_arg_redir(msh->groups[i]);
 		ft_print_newargvs(msh->groups[i]);
-		printf("============================================\n");
 		i++;
 	}
+	printf("============================ groups printed =\n");
 }
