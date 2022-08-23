@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 17:37:48 by vangirov          #+#    #+#             */
-/*   Updated: 2022/08/22 20:45:07 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/23 11:52:41 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	ft_unite_texts(t_group *group)
 	int		cmd_i;
 	t_list	*link;
 	t_list	*next;
+	char	*text;
 
 	cmd_i = 0;
 	while (cmd_i < group->cmds->cmd_num)
@@ -62,9 +63,10 @@ int	ft_unite_texts(t_group *group)
 				next = link->next;
 				while (next && ft_ectracttype(next) != LX_SEP)
 				{
-					((t_lexem *)(link->content))->text = \
-						ft_strjoin(ft_ectracttext(link), ft_ectracttext(next));
+					text = ft_ectracttext(link);
+					((t_lexem *)(link->content))->text = ft_strjoin(text, ft_ectracttext(next));
 					link->next = next->next;
+					free(text);
 					ft_free_lexem(next);
 					next = link->next;
 				}
