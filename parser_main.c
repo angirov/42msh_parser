@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 17:37:48 by vangirov          #+#    #+#             */
-/*   Updated: 2022/08/23 12:30:02 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/23 13:15:26 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	ft_unite_texts(t_group *group)
 	t_list	*next;
 	char	*text;
 
-	printf("TEST u1 <\n");
 	cmd_i = 0;
 	while (cmd_i < group->cmds->cmd_num)
 	{
@@ -76,6 +75,5 @@ int	ft_unite_texts(t_group *group)
 		}
 		cmd_i++;
 	}
-	printf("TEST u999 <\n");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 11:33:00 by vangirov          #+#    #+#             */
-/*   Updated: 2022/08/23 12:58:57 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/23 14:01:50 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	ft_count_cmds(t_list **lexems)
 
 int	ft_count_args(t_list **cmd_args)
 {
+	if (!*cmd_args)
+		return (0);
 	int		counter;
 	int		type;
 	t_list	*link;
@@ -105,33 +107,30 @@ int	ft_make_newargvs(t_group *group)
 	group->cmds->newargvs = ft_calloc(group->cmds->cmd_num, sizeof(char **));
 	cmd_i = 0;
 	link = *group->lexems;
-	while (cmd_i < group->cmds->cmd_num && *group->cmds->cmd_args[cmd_i])
+	while (cmd_i < group->cmds->cmd_num)
 	{
 		arg_i = 0;
 		arg_num = ft_count_args(group->cmds->cmd_args[cmd_i]);
-		printf("TEST ma2 argnum = %d<\n", arg_num);
+		if (!arg_num)
+		{
+			cmd_i++;
+			continue;
+		}
 		group->cmds->newargvs[cmd_i] = malloc(sizeof(char *) * (arg_num + 1));
 		link = *group->cmds->cmd_args[cmd_i];
-		printf("TEST ma3 <\n");
 		while (link)
 		{
 			type = ft_ectracttype(link);
-			printf("TEST ma3 <\n");
 			if (type != LX_SEP && type != LX_AND && type != LX_OR)
 			{
-				printf("TEST ma4 <\n");
 				group->cmds->newargvs[cmd_i][arg_i] = \
 					ft_strdup(ft_ectracttext(link));
 				arg_i++;
 			}
-			printf("TEST ma5 <\n");
 			link = link->next;
-			printf("TEST ma6 <\n");
 		}
 		group->cmds->newargvs[cmd_i][arg_i] = 0;
-		printf("TEST ma7 <\n");
 		cmd_i++;
 	}
-	printf("TEST ma000 <\n");
 	return (0);
 }

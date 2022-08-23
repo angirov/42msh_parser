@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 15:19:07 by vangirov          #+#    #+#             */
-/*   Updated: 2022/08/23 13:09:16 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/23 14:00:05 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ void	ft_free_lexems(t_list **head)
 void	ft_free_gr_lexems(t_group *group, int cmd_i)
 {
 	if (*group->cmds->cmd_args[cmd_i])
-	{
 		ft_free_lexems(group->cmds->cmd_args[cmd_i]);
+	if (group->cmds->newargvs[cmd_i])
 		ft_free_split(group->cmds->newargvs[cmd_i]);
-	}
-	ft_free_lexems(group->cmds->redirs[cmd_i]);
+	if (*group->cmds->redirs[cmd_i])
+		ft_free_lexems(group->cmds->redirs[cmd_i]);
 }
 
 void	ft_free_groups(t_msh *msh)

@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 10:13:32 by danisanc          #+#    #+#             */
-/*   Updated: 2022/08/23 13:01:47 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/23 13:56:50 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_print_newargvs(t_group *group)
 	int	k;
 
 	j = 0;
-	while (j < group->cmds->cmd_num && *group->cmds->cmd_args[j])
+	while (j < group->cmds->cmd_num)
 	{
 		k = 0;
 		while (k < ft_count_args(group->cmds->cmd_args[j]))
