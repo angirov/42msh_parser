@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:13:13 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/13 20:04:28 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/23 14:32:35 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ char	*ft_findsym(char *ptr, t_msh *msh)
 			if (i <= LX_VAR)
 				return (ft_getfield(i, ++ptr, msh));
 			else if (i >= LX_PIPE && i <= LX_REDIR_IN \
-				&& *(ptr + 1) && *(ptr + 1) != *ptr)
+				&& ((*(ptr + 1) && *(ptr + 1) != *ptr) || !*(ptr + 1)))
 			{
 				ft_addlexem(msh->lexems, ft_newlexem(i, ft_strdup("")));
 				return (ptr + 1);
