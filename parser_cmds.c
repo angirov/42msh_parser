@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 11:33:00 by vangirov          #+#    #+#             */
-/*   Updated: 2022/08/23 14:01:50 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/23 16:36:02 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,7 @@ int	ft_make_newargvs(t_group *group)
 	int		arg_num;
 	int		type;
 
-	group->cmds->newargvs = ft_calloc(group->cmds->cmd_num, sizeof(char **));
 	cmd_i = 0;
-	link = *group->lexems;
 	while (cmd_i < group->cmds->cmd_num)
 	{
 		arg_i = 0;
