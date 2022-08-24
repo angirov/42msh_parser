@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 13:10:15 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/13 19:49:26 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/24 20:00:20 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,36 +81,43 @@ int	ft_get_var_len(char *ptr, t_msh *msh)
 	return (len);
 }
 
+char	*ft_exp_loop_content(t_msh *msh, char *ptr, char *ret)
+{
+	char	*name;
+	char	*value;
+	int		len;
+	
+	if (*ptr != '$')
+	{
+		ret = ft_strjoinfree(ret, ft_chr2str(*ptr));
+		ptr++;
+	}
+	else
+	{
+		len = ft_get_var_len(++ptr, msh);
+		name = ft_gettext(ptr, len);
+		value = ft_get_var_value(name, msh);
+		free(name);
+		if (value)
+		{
+			ret = ft_strjoinfree(ret, value);
+		}
+		ptr += len;
+	}
+	return (ptr);
+}
+
 char	*ft_expand_text(t_msh *msh, char *text)
 {
 	char	*ptr;
 	char	*ret;
-	char	*name;
-	char	*value;
-	int		len;
 
 	ptr = text;
 	ret = malloc(sizeof(char));
 	ret[0] = '\0';
 	while (*ptr)
 	{
-		if (*ptr != '$')
-		{
-			ret = ft_strjoinfree(ret, ft_chr2str(*ptr));
-			ptr++;
-		}
-		else
-		{
-			len = ft_get_var_len(++ptr, msh);
-			name = ft_gettext(ptr, len);
-			value = ft_get_var_value(name, msh);
-			free(name);
-			if (value)
-			{
-				ret = ft_strjoinfree(ret, value);
-			}
-			ptr += len;
-		}
+		ft_exp_loop_content(msh, ptr, ret);
 	}
 	return (ret);
 }

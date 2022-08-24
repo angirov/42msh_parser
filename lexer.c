@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:13:13 by vangirov          #+#    #+#             */
-/*   Updated: 2022/08/23 20:49:56 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 19:50:02 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,35 +133,44 @@ int	ft_have_inters(char *s1, char *s2)
 	return (len);
 }
 
+char	*ft_finding(char *ptr, t_msh *msh, int i)
+{
+	if (i <= LX_VAR)
+		return (ft_getfield(i, ++ptr, msh));
+	else if (i >= LX_PIPE && i <= LX_REDIR_IN \
+		&& ((*(ptr + 1) && *(ptr + 1) != *ptr) || !*(ptr + 1)))
+	{
+		ft_addlexem(msh->lexems, ft_newlexem(i, ft_strdup("")));
+		return (ptr + 1);
+	}
+	else if (i == LX_AND && ((*(ptr + 1) \
+		&& *(ptr + 1) != *ptr) || !*(ptr + 1)))
+	{
+		ft_addlexem(msh->lexems, \
+			ft_newlexem(LX_WORD, ft_chr2str(*ptr)));
+		return (ptr + 1);
+	}
+	else if (i >= LX_AND && i <= LX_REDIR_INSRC && *(ptr + 1) == *ptr)
+	{
+		ft_addlexem(msh->lexems, ft_newlexem(i, ft_strdup("")));
+		return (ptr + 2);
+	}
+	return (NULL);
+}
+
 char	*ft_findsym(char *ptr, t_msh *msh)
 {
 	int		i;
+	char	*result;
 
 	i = 0;
 	while (*ptr && i < LX_NUM)
 	{
 		if (*ptr == msh->delims[i][0])
 		{
-			if (i <= LX_VAR)
-				return (ft_getfield(i, ++ptr, msh));
-			else if (i >= LX_PIPE && i <= LX_REDIR_IN \
-				&& ((*(ptr + 1) && *(ptr + 1) != *ptr) || !*(ptr + 1)))
-			{
-				ft_addlexem(msh->lexems, ft_newlexem(i, ft_strdup("")));
-				return (ptr + 1);
-			}
-			else if (i == LX_AND && ((*(ptr + 1) \
-				&& *(ptr + 1) != *ptr) || !*(ptr + 1)))
-			{
-				ft_addlexem(msh->lexems, \
-					ft_newlexem(LX_WORD, ft_chr2str(*ptr)));
-				return (ptr + 1);
-			}
-			else if (i >= LX_AND && i <= LX_REDIR_INSRC && *(ptr + 1) == *ptr)
-			{
-				ft_addlexem(msh->lexems, ft_newlexem(i, ft_strdup("")));
-				return (ptr + 2);
-			}
+			result = ft_finding(ptr, msh, i);
+			if (result)
+				return(result);
 		}
 		i++;
 	}

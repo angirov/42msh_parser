@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 17:37:48 by vangirov          #+#    #+#             */
-/*   Updated: 2022/08/24 13:47:18 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 19:41:08 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,26 @@ int	ft_error(char *error_text, int error_num)
 	return (error_num);
 }
 
+void	ft_loop_for_sep(t_list	*link, t_list	*next)
+{
+	char	*text;
+
+	while (next && ft_ectracttype(next) != LX_SEP && ft_is_redir(ft_ectracttype(next)) == -1)
+	{
+		text = ft_ectracttext(link);
+		((t_lexem *)(link->content))->text = ft_strjoin(text, ft_ectracttext(next));
+		link->next = next->next;
+		free(text);
+		ft_free_lexem(next);
+		next = link->next;
+	}
+}
+
 int	ft_unite_texts(t_group *group)
 {
 	int		cmd_i;
 	t_list	*link;
 	t_list	*next;
-	char	*text;
 
 	cmd_i = 0;
 	while (cmd_i < group->cmds->cmd_num)
@@ -65,15 +79,7 @@ int	ft_unite_texts(t_group *group)
 			if (ft_ectracttype(link) != LX_SEP)
 			{
 				next = link->next;
-				while (next && ft_ectracttype(next) != LX_SEP && ft_is_redir(ft_ectracttype(next)) == -1)
-				{
-					text = ft_ectracttext(link);
-					((t_lexem *)(link->content))->text = ft_strjoin(text, ft_ectracttext(next));
-					link->next = next->next;
-					free(text);
-					ft_free_lexem(next);
-					next = link->next;
-				}
+				ft_loop_for_sep(link, next);
 			}
 			link = link->next;
 		}
