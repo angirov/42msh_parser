@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 11:33:00 by vangirov          #+#    #+#             */
-/*   Updated: 2022/08/23 16:36:02 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/24 20:39:00 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,32 @@ int	ft_count_args(t_list **cmd_args)
 	return (counter);
 }
 
+void	ft_loop_thru_args(t_list *link, t_group *group, int i)
+{
+	int		type;
+	char	*text;
+
+	while (link)
+	{
+		type = ft_ectracttype(link);
+		if (type == LX_PIPE && *group->cmds->cmd_args[i])
+		{
+			link = link->next;
+			break ;
+		}
+		if (!(type == LX_SEP && !*group->cmds->cmd_args[i]))
+		{
+			text = ft_strdup(ft_ectracttext(link));
+			ft_addlexem(group->cmds->cmd_args[i], ft_newlexem(type, text));
+		}
+		link = link->next;
+	}
+}
+
 int	ft_make_cmd_args(t_group *group)
 {
 	int		i;
 	t_list	*link;
-	int		type;
-	char	*text;
 
 	group->cmds = malloc(sizeof(t_cmds));
 	group->cmds->cmd_num = ft_count_cmds(group->lexems);
@@ -75,21 +95,7 @@ int	ft_make_cmd_args(t_group *group)
 	{
 		group->cmds->cmd_args[i] = malloc(sizeof(t_list *));
 		*group->cmds->cmd_args[i] = NULL;
-		while (link)
-		{
-			type = ft_ectracttype(link);
-			if (type == LX_PIPE && *group->cmds->cmd_args[i])
-			{
-				link = link->next;
-				break ;
-			}
-			if (!(type == LX_SEP && !*group->cmds->cmd_args[i]))
-			{
-				text = ft_strdup(ft_ectracttext(link));
-				ft_addlexem(group->cmds->cmd_args[i], ft_newlexem(type, text));
-			}
-			link = link->next;
-		}
+		ft_loop_thru_args(link, group, i);
 		ft_dellastsep(group->cmds->cmd_args[i]);
 		i++;
 	}
