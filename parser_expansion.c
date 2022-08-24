@@ -6,22 +6,11 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 13:10:15 by vangirov          #+#    #+#             */
-/*   Updated: 2022/08/24 20:30:11 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/24 23:43:07 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	ft_expand_all_groups_vars(t_msh *msh)
-{
-	int	i;
-
-	i = 0;
-	while (i < msh->group_num)
-	{
-		ft_expand_gr_vars(msh, i);
-	}
-}
 
 /*	Returns malloced string string==value of the variable*/
 char	*ft_get_var_value(char *text, t_msh *msh)
@@ -131,3 +120,14 @@ void	ft_expand_gr_fields(t_msh *msh, int group_i)
 		link = next;
 	}
 }
+
+// void	ft_expand_all_groups_vars(t_msh *msh)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (i < msh->group_num)
+// 	{
+// 		ft_expand_gr_vars(msh, i);
+// 	}
+// }

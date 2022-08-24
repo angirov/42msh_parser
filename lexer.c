@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:13:13 by vangirov          #+#    #+#             */
-/*   Updated: 2022/08/24 19:50:02 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/24 23:33:20 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,37 +33,6 @@ void	ft_init_delims(t_msh *msh)
 	msh->delims = delims;
 }
 
-char	*ft_gettext(char *ptr, int len)
-{
-	char	*text;
-	int		i;
-
-	text = malloc(sizeof(char) * len + 1);
-	i = 0;
-	while (i < len)
-	{
-		text[i] = ptr[i];
-		i++;
-	}
-	text[i] = '\0';
-	return (text);
-}
-
-char	*ft_skip_spaces(char *ptr, t_msh *msh)
-{
-	int	sep;
-
-	sep = 0;
-	while (*ptr && *ptr == ' ')
-	{
-		ptr++;
-		sep++;
-	}
-	if (sep && ft_lstsize(*msh->lexems))
-		ft_addlexem(msh->lexems, ft_newlexem(LX_SEP, ft_strdup("")));
-	return (ptr);
-}
-
 char	*ft_getfield(int lx_type, char *ptr, t_msh *msh)
 {
 	int		len;
@@ -82,55 +51,6 @@ char	*ft_getfield(int lx_type, char *ptr, t_msh *msh)
 	if (*ptr && lx_type <= LX_EXT_FIELD)
 		ptr++;
 	return (ptr);
-}
-
-char	*ft_chr2str(char c)
-{
-	char	*str;
-
-	str = malloc(sizeof(char) * 2);
-	str[0] = c;
-	str[1] = 0;
-	return (str);
-}
-
-char	*ft_intersect(char *s1, char *s2)
-{
-	char	*intersection;
-
-	intersection = ft_strdup("");
-	while (*s1)
-	{
-		printf(">>> %c\n", *s1);
-		if (!ft_strchr(s1 + 1, *s1) && ft_strchr(s2, *s1))
-		{
-			intersection = ft_strjoinfree(intersection, ft_chr2str(*s1));
-		}
-		s1++;
-	}
-	if (ft_strlen(intersection))
-		return (intersection);
-	else
-	{
-		free(intersection);
-		return (NULL);
-	}
-}
-
-int	ft_have_inters(char *s1, char *s2)
-{
-	char	*intersection;
-	int		len;
-
-	len = 0;
-	intersection = ft_intersect(s1, s2);
-	if (intersection)
-	{
-		len = ft_strlen(intersection);
-		if (len)
-			free(intersection);
-	}
-	return (len);
 }
 
 char	*ft_finding(char *ptr, t_msh *msh, int i)
@@ -170,7 +90,7 @@ char	*ft_findsym(char *ptr, t_msh *msh)
 		{
 			result = ft_finding(ptr, msh, i);
 			if (result)
-				return(result);
+				return (result);
 		}
 		i++;
 	}

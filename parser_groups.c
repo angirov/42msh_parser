@@ -6,55 +6,11 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 06:32:00 by vangirov          #+#    #+#             */
-/*   Updated: 2022/08/24 21:38:58 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/24 23:56:20 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void ft_trim_lexems_front(t_list **lexems)
-{
-	t_list	*link;
-	t_list	*next;
-	int		type;
-
-	link = *lexems;
-	while(link)
-	{
-		next = link->next;
-		type = ft_ectracttype(link);
-		if (type == LX_AND || type == LX_OR || type == LX_SEP || type == LX_PIPE)
-		{
-			ft_lst_detach_from(lexems, link);
-			ft_free_lexem(link);
-		}
-		else
-			break;
-		link = next;
-	}
-}
-
-void ft_trim_lexems_back(t_list **lexems)
-{
-	t_list	*link;
-	t_list	*prev;
-	int		type;
-
-	link = ft_lstlast(*lexems);
-	while(link)
-	{
-		prev = ft_lst_find_preceding(lexems, link);
-		type = ft_ectracttype(link);
-		if (type == LX_AND || type == LX_OR || type == LX_SEP || type == LX_PIPE)
-		{
-			ft_lst_detach_from(lexems, link);
-			ft_free_lexem(link);
-		}
-		else
-			break;
-		link = prev;
-	}
-}
 
 /* if the first token is AND or OR print error */
 int	ft_count_groups(t_list **lexems)
@@ -70,7 +26,6 @@ int	ft_count_groups(t_list **lexems)
 	counter = 1;
 	link = *lexems;
 	type = ft_ectracttype(link);
-
 	while (link)
 	{
 		type = ft_ectracttype(link);
