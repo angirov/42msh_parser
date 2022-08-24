@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 06:32:00 by vangirov          #+#    #+#             */
-/*   Updated: 2022/08/24 19:20:36 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/24 21:38:58 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,29 @@ void	ft_init_group(t_msh *msh, int i, int type)
 		msh->groups[i]->type = type;
 }
 
-int	ft_makegroups(t_msh *msh)
+void	ft_make_agroup(t_msh *msh, int i)
 {
-	int		i;
 	t_list	*link;
 	int		type;
 	char	*text;
+
+	link = *msh->lexems;
+	ft_init_group(msh, i, ft_ectracttype(link));
+	while (link)
+	{
+		type = ft_ectracttype(link);
+		if ((type == LX_AND || type == LX_OR) && *msh->groups[i]->lexems)
+			break ;
+		text = ft_strdup(ft_ectracttext(link));
+		ft_addlexem(msh->groups[i]->lexems, ft_newlexem(type, text));
+		link = link->next;
+	}
+	ft_dellastsep(msh->groups[i]->lexems);
+}
+
+int	ft_makegroups(t_msh *msh)
+{
+	int		i;
 
 	msh->group_num = ft_count_groups(msh->lexems);
 	printf("gr num: %d\n", msh->group_num);
@@ -109,20 +126,9 @@ int	ft_makegroups(t_msh *msh)
 	}
 	msh->groups = malloc(sizeof(t_group *) * msh->group_num);
 	i = 0;
-	link = *msh->lexems;
 	while (i < msh->group_num)
 	{
-		ft_init_group(msh, i, ft_ectracttype(link));
-		while (link)
-		{
-			type = ft_ectracttype(link);
-			if ((type == LX_AND || type == LX_OR) && *msh->groups[i]->lexems)
-				break ;
-			text = ft_strdup(ft_ectracttext(link));
-			ft_addlexem(msh->groups[i]->lexems, ft_newlexem(type, text));
-			link = link->next;
-		}
-		ft_dellastsep(msh->groups[i]->lexems);
+		ft_make_agroup(msh, i);
 		i++;
 	}
 	return (msh->group_num);
