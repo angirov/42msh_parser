@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:13:13 by vangirov          #+#    #+#             */
-/*   Updated: 2022/08/23 14:32:35 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/23 20:49:56 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_init_delims(t_msh *msh)
 	delims = malloc(sizeof(char *) * (LX_NUM + 1));
 	delims[LX_FIELD] = "''";
 	delims[LX_EXT_FIELD] = "\"\"";
-	delims[LX_VAR] = "$$ ";
+	delims[LX_VAR] = "$$ '\"@!#%^&*()+_-=}{[]\\/?.,<>`~";
 	delims[LX_PAR] = "()";
 	delims[LX_PIPE] = "|";
 	delims[LX_REDIR_OUT] = ">";
