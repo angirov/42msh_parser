@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 06:32:00 by vangirov          #+#    #+#             */
-/*   Updated: 2022/08/24 23:56:20 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/25 00:40:22 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int	ft_makegroups(t_msh *msh)
 	int		i;
 
 	msh->group_num = ft_count_groups(msh->lexems);
-	printf("gr num: %d\n", msh->group_num);
 	if (msh->group_num <= 0)
 	{
 		ft_free_lexems(msh->lexems);
