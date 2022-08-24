@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 13:10:15 by vangirov          #+#    #+#             */
-/*   Updated: 2022/07/13 19:49:26 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/24 20:23:51 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,7 @@ char	*ft_expand_text(t_msh *msh, char *text)
 	while (*ptr)
 	{
 		if (*ptr != '$')
-		{
-			ret = ft_strjoinfree(ret, ft_chr2str(*ptr));
-			ptr++;
-		}
+			ret = ft_strjoinfree(ret, ft_chr2str(*ptr++));
 		else
 		{
 			len = ft_get_var_len(++ptr, msh);
@@ -106,9 +103,7 @@ char	*ft_expand_text(t_msh *msh, char *text)
 			value = ft_get_var_value(name, msh);
 			free(name);
 			if (value)
-			{
 				ret = ft_strjoinfree(ret, value);
-			}
 			ptr += len;
 		}
 	}
