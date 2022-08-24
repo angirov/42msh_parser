@@ -6,7 +6,7 @@
 /*   By: danisanc <danisanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 17:37:48 by vangirov          #+#    #+#             */
-/*   Updated: 2022/08/23 20:25:56 by danisanc         ###   ########.fr       */
+/*   Updated: 2022/08/24 13:47:18 by danisanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	ft_unite_texts(t_group *group)
 			if (ft_ectracttype(link) != LX_SEP)
 			{
 				next = link->next;
-				while (next && ft_ectracttype(next) != LX_SEP)
+				while (next && ft_ectracttype(next) != LX_SEP && ft_is_redir(ft_ectracttype(next)) == -1)
 				{
 					text = ft_ectracttext(link);
 					((t_lexem *)(link->content))->text = ft_strjoin(text, ft_ectracttext(next));
