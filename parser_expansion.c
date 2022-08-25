@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 13:10:15 by vangirov          #+#    #+#             */
-/*   Updated: 2022/08/24 23:43:07 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/25 21:10:01 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	ft_expand_gr_vars(t_msh *msh, int group_i)
 			value = ft_get_var_value(text, msh);
 			if (value)
 			{
+				free(ft_ectracttext(link));
 				(*(t_lexem *)link->content).text = value;
 				(*(t_lexem *)link->content).type = LX_WORD;
 			}
