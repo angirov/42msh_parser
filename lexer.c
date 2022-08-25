@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:13:13 by vangirov          #+#    #+#             */
-/*   Updated: 2022/08/24 23:33:20 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/25 13:33:11 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_init_delims(t_msh *msh)
 	delims = malloc(sizeof(char *) * (LX_NUM + 1));
 	delims[LX_FIELD] = "''";
 	delims[LX_EXT_FIELD] = "\"\"";
-	delims[LX_VAR] = "$$ '\"@!#%^&*()+_-=}{[]\\/?.,<>`~";
+	delims[LX_VAR] = "$$ '\"@!#%^&*()+_-=}{[]\\/.,<>`~";
 	delims[LX_PAR] = "()";
 	delims[LX_PIPE] = "|";
 	delims[LX_REDIR_OUT] = ">";
