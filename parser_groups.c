@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 06:32:00 by vangirov          #+#    #+#             */
-/*   Updated: 2022/08/25 00:40:22 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/25 14:22:17 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,42 +48,41 @@ void	ft_init_group(t_msh *msh, int i, int type)
 		msh->groups[i]->type = type;
 }
 
-void	ft_make_agroup(t_msh *msh, int i)
+int	ft_makegroups_2(t_msh *msh)
 {
+	int		i;
 	t_list	*link;
 	int		type;
 	char	*text;
 
+	msh->groups = malloc(sizeof(t_group *) * msh->group_num);
+	i = 0;
 	link = *msh->lexems;
-	ft_init_group(msh, i, ft_ectracttype(link));
-	while (link)
+	while (i < msh->group_num)
 	{
-		type = ft_ectracttype(link);
-		if ((type == LX_AND || type == LX_OR) && *msh->groups[i]->lexems)
-			break ;
-		text = ft_strdup(ft_ectracttext(link));
-		ft_addlexem(msh->groups[i]->lexems, ft_newlexem(type, text));
-		link = link->next;
+		ft_init_group(msh, i, ft_ectracttype(link));
+		while (link)
+		{
+			type = ft_ectracttype(link);
+			if ((type == LX_AND || type == LX_OR) && *msh->groups[i]->lexems)
+				break ;
+			text = ft_strdup(ft_ectracttext(link));
+			ft_addlexem(msh->groups[i]->lexems, ft_newlexem(type, text));
+			link = link->next;
+		}
+		ft_dellastsep(msh->groups[i]->lexems);
+		i++;
 	}
-	ft_dellastsep(msh->groups[i]->lexems);
+	return (msh->group_num);
 }
 
 int	ft_makegroups(t_msh *msh)
 {
-	int		i;
-
 	msh->group_num = ft_count_groups(msh->lexems);
 	if (msh->group_num <= 0)
 	{
 		ft_free_lexems(msh->lexems);
 		return (ft_error("could not parse", -300));
 	}
-	msh->groups = malloc(sizeof(t_group *) * msh->group_num);
-	i = 0;
-	while (i < msh->group_num)
-	{
-		ft_make_agroup(msh, i);
-		i++;
-	}
-	return (msh->group_num);
+	return (ft_makegroups_2(msh));
 }
