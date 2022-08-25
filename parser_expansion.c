@@ -6,7 +6,7 @@
 /*   By: vangirov <vangirov@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 13:10:15 by vangirov          #+#    #+#             */
-/*   Updated: 2022/08/25 21:10:01 by vangirov         ###   ########.fr       */
+/*   Updated: 2022/08/25 21:34:06 by vangirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,7 @@ void	ft_expand_gr_vars(t_msh *msh, int group_i)
 				(*(t_lexem *)link->content).type = LX_WORD;
 			}
 			else
-			{
 				ft_lst_detach_from(msh->groups[group_i]->lexems, link);
-			}
 		}
 		link = next;
 	}
